@@ -1,36 +1,35 @@
 from collections import defaultdict
 
 class SATInstance:
-	def __init__(self, num_vars, num_clauses):
-		self.num_vars = num_vars
-		self.num_clauses = num_clauses
-		self.vars = set()
+	def __init__(self, num_vars, clauses):
+		self.num_clauses = len(clauses)
+		self.vars = set(range(1, num_vars+1))
 		self.clauses = []
 		self.clause_list = []
 		self.var_clause_map = defaultdict(list)
-
-
-	def add_variable(self, lit):
-		self.vars.add(lit) if lit >= 0 else self.vars.add(-1*lit)
+		for clause in clauses:
+			self.add_clause(clause)
 
 	def add_clause(self, cl):
 		cl_obj = self.Clause(self, cl, len(self.clause_list))
 		self.clause_list.append(cl)
 		self.clauses.append(cl_obj)
 
-
 	def stringify(self):
-		st = "Number of variables: " + str(self.num_vars) + "\n" + 
+		st = "Number of variables: " + str(len(self.vars)) + "\n" + \
 		"Number of clauses: " + str(self.num_clauses) + "\n" + "Variables: " 
 
-		for v in self.vars:
-			st += str(v) + ", "
+		for i, v in enumerate(self.vars):
+			st += str(v)
+			if i < len(self.vars) - 1:
+				st += ", "
+		
 
 		st.strip()
 		st += "\n"
 
 		for c in range(len(self.clause_list)):
-			st += "Clause " + str(c) + ": " + self.clause_list[c].join(" ") + "\n"
+			st += "Clause " + str(c) + ": " + str(self.clause_list[c]) + "\n"
 
 		st.strip()
 		return st
@@ -47,10 +46,6 @@ class SATInstance:
 			for v in self.cl:
 				un_vars.add(v) if v >= 0 else un_vars.add(-1*v)
 				self.outer.var_clause_map[v].append(self.ind)
-
-
-
-
 
 
 

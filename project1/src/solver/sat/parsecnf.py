@@ -1,5 +1,7 @@
+from SATinstance import *
+
 def read(filename):
-    f = open("input/simple.cnf", "r")
+    f = open(filename, "r")
     num_vars = 0
     num_clauses = 0
     started_reading = False
@@ -15,3 +17,7 @@ def read(filename):
             num_vars = int(line.split()[2])
             num_clauses = int(line.split()[3])
     return num_vars, clauses
+
+num_vars, clauses = read("simple.cnf")
+problem = SATInstance(num_vars, clauses)
+print problem.stringify()
