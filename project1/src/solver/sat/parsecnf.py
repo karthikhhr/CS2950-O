@@ -6,9 +6,9 @@ def read(filename):
     clauses = []
     for line in f:
         if started_reading:
-            clause = []
+            clause = set()
             for lit in line.split()[:-1]:
-                clause.append(int(lit))
+                clause.add(int(lit))
             clauses.append(clause)
         if line.split()[0] == 'p':
             started_reading = True
