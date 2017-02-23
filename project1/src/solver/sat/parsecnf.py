@@ -19,13 +19,14 @@ def read(filename):
             num_clauses = int(line.split()[3])
     return num_vars, clauses
 
-num_vars, clauses = read("C169_FV.cnf")
+num_vars, clauses = read("inputs/C168_FW_UT_538.cnf")
 problem = SATInstance(num_vars, clauses)
 print problem.stringify()
 print problem.stringify()
 
 def DPLL(problem):
     if problem.is_SAT():
+        print "True Variables:" + str(problem.true_variables)
         return True
     if problem.is_UNSAT():
         return False

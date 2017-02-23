@@ -92,7 +92,14 @@ class SATInstance:
 					self.true_variables.add(pure_lit)
 
 	def choose_literal(self):
-		return random.choice(self.lit_clause_map.keys())
+		t_max = (None, 0)
+		for lit, clauses in self.lit_clause_map.items():
+			if len(clauses) > t_max[1]:
+				t_max = (lit, len(clauses))
+		if t_max[0] == None:
+			return random.choice(self.lit_clause_map.keys())
+		else:
+			return t_max[0]
 
 	def assign_true(self, lit):
 		for clause_index in self.lit_clause_map[lit]:
