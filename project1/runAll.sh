@@ -37,7 +37,7 @@ touch $logFile
 for f in $inputFolder*.*
 do
 	echo "Running $f"
-	timeout $timeLimit ./run.sh $f > output.tmp
+	./run.sh $f > output.tmp
 	returnValue="$?"
 	if [[ "$returnValue" = 0 ]]; then 					# Run is successful
 		cat output.tmp | tail -1 >> $logFile				# Record the last line as solution

@@ -1,7 +1,6 @@
-from SATInstance import *
+from SATInstancenew import *
 import sys
 import time
-
 
 def read(filename):
     f = open(filename, "r")
@@ -28,13 +27,13 @@ instance_name = args[1].split('/')[-1]
 problem = SATInstance(num_vars, clauses)
 
 def dpll(prob):
+    if prob.unit_propagate():
+        return None
+    prob.pure_literal_elem()
     if prob.is_SAT():
-        print "True Variables:" + str(prob.true_variables)
         return prob.true_variables
     if prob.is_UNSAT():
         return None
-    prob.unit_propagate()
-    prob.pure_literal_elem()
     lit = prob.choose_literal()
     problem1 = copy.deepcopy(prob)
     problem2 = copy.deepcopy(prob)
@@ -45,11 +44,11 @@ def dpll(prob):
 start = time.clock()
 true_vars = dpll(problem)
 end = time.clock()
-time = (end-start)/1000
+time = (end-start)/1000.0
 res_string = 'UNSAT'
 
 if true_vars:
-    false_vars = problem.vars - true_vars
+    false_vars = set(range(1, problem.num_vars+1)) - true_vars
     res_string = "SAT Solution: "
     for ti in sorted(list(true_vars)):
         res_string += str(ti) + " true "
