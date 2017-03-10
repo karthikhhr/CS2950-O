@@ -41,10 +41,33 @@ def dpll(prob):
     problem2.assign_true(lit*(-1))
     return dpll(problem1) or dpll(problem2)
 
-start = time.clock()
+
+# def dpll_iterative(prob):
+#     rec_stack = [prob]
+#     visited = set()
+#     while len(rec_stack):
+#         problem = rec_stack.pop()
+#         if problem.is_UNSAT():
+#             continue
+#         if problem not in visited:
+#             visited.add(problem)
+#             lit = problem.choose_literal()
+#             prob1 = copy.deepcopy(problem)
+#             prob2 = copy.deepcopy(problem)
+#             prob1.assign_true(lit)
+#             prob2.assign_true(lit*(-1))
+#             rec_stack.append(prob1)
+#             rec_stack.append(prob2)
+#         if problem.is_SAT():
+#             return problem.true_variables
+#     return None
+
+
+start = time.time()
 true_vars = dpll(problem)
-end = time.clock()
-time = (end-start)/1000.0
+end = time.time()
+time = end-start
+time = float("{0:.2f}".format(time))
 res_string = 'UNSAT'
 
 if true_vars:

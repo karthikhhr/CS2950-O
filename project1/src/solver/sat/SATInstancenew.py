@@ -87,7 +87,7 @@ class SATInstance:
         for lit, clauses in self.lit_clause_map.items():
             if len(clauses) > t_max[1]:
                 t_max = (lit, len(clauses))
-        if t_max[0] == None:
+        if t_max[0] is None:
             print "WHOOPS"
             return random.choice(self.lit_clause_map.keys())
         else:
